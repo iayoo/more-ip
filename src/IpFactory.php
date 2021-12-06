@@ -20,6 +20,9 @@ abstract class IpFactory
     public $city;
     /** @var string 区 */
     public $district;
+
+    public $address;
+
     /** @var string 运营商 */
     public $operator;
 
@@ -151,10 +154,37 @@ abstract class IpFactory
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
     protected function send($method = "GET",$url="" ,$requestData=[]){
+
+//        $headers = array();
+//        $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+//        $headers[] = 'Accept-Language: zh-CN,zh;q=0.9';
+//        $headers[] = 'Cache-Control: no-cache';
+//        $headers[] = 'Content-Type: text/html; charset=GBK';
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_ACCEPT_ENCODING, "gzip,deflate");
+
         if (strtoupper($method) === "POST"){
             //普通数据
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($requestData));
@@ -175,6 +205,7 @@ abstract class IpFactory
             'city'      => $this->city,
             'district'  => $this->district,
             'operator'  => $this->operator,
+            'address'   => $this->address,
         ];
     }
 }
