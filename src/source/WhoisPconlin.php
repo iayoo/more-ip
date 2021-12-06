@@ -22,6 +22,8 @@ class WhoisPconlin extends \Iayoo\IP\IpFactory
             $this->setCity(isset($json['city'])?$json['city']:'');
             $this->setDistrict(isset($json['region'])?$json['region']:'');
             $this->setAddress(isset($json['addr'])?$json['addr']:'');
+        }else{
+            $this->isSuccess = false;
         }
         return $this;
     }

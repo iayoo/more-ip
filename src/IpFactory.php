@@ -30,6 +30,8 @@ abstract class IpFactory
 
     protected $appKey;
 
+    protected $isSuccess = false;
+
     /**
      * @return string
      */
@@ -196,6 +198,9 @@ abstract class IpFactory
     }
 
     public function toArray(){
+        if($this->isSuccess === false){
+            return null;
+        }
         return [
             'longitude' => $this->longitude,
             'latitude'  => $this->latitude,

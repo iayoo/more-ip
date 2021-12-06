@@ -74,6 +74,9 @@ class IP{
         $return = [];
         foreach ($this->clients as $class => $client){
             $tmp = $client->toArray();
+            if(is_null($tmp)){
+                continue;
+            }
             $classEx = explode('\\',$class);
             $tmp['name'] = $this->uncamelize($classEx[count($classEx)-1]);
             $return[] = $tmp;

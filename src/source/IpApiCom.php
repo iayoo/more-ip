@@ -19,6 +19,8 @@ class IpApiCom extends IpFactory
             $this->setCity(isset($json['city'])?$json['city']:'');
             $this->setLatitude(isset($json['lat'])?(string)$json['lat']:'');
             $this->setLongitude(isset($json['lon'])?(string)$json['lon']:'');
+        }else{
+            $this->isSuccess = false;
         }
         return $this;
     }
