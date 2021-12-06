@@ -3,23 +3,31 @@ namespace Iayoo\IP;
 
 use Iayoo\IP\source\FreeapiIpipNet;
 use Iayoo\IP\source\IpApiCom;
+use Iayoo\IP\source\TaoBaoApi;
 use Iayoo\IP\source\TencentMapApi;
+use Iayoo\IP\source\WhoisPconlin;
 
 class IP{
     protected $able = [
         FreeapiIpipNet::class,
         IpApiCom::class,
-        TencentMapApi::class
+        TencentMapApi::class,
+        WhoisPconlin::class,
+        TaoBaoApi::class
+    ];
+
+    protected $keyList = [
     ];
 
     protected $clients = [];
 
     protected $curClient;
 
-    public function __construct($able = [])
+    public function __construct($able = [],$keyList = [])
     {
         if (!empty($able)){
             $this->able = $able;
+            $this->keyList = $keyList;
         }
         $this->initClient();
     }
@@ -47,6 +55,9 @@ class IP{
     protected function initClient(){
         foreach ($this->able as $client){
             $this->clients[$client] = new $client();
+            if (isset($this->keyList[$client])){
+                $this->clients[$client]->setClientKey($this->keyList[$client]);
+            }
         }
     }
 
@@ -61,8 +72,11 @@ class IP{
 
     public function getAll(){
         $return = [];
-        foreach ($this->clients as $client){
-            $return[] = $client->toArray();
+        foreach ($this->clients as $class => $client){
+            $tmp = $client->toArray();
+            $classEx = explode('\\',$class);
+            $tmp['name'] = $this->uncamelize($classEx[count($classEx)-1]);
+            $return[] = $tmp;
         }
         return $return;
     }
@@ -94,5 +108,10 @@ class IP{
         foreach ($this->clients as $class => $client){
             return call_user_func_array([$client,$name],$arguments);
         }
+    }
+
+    protected function uncamelize($camelCaps,$separator='_')
+    {
+        return strtolower(preg_replace('/([a-z])([A-Z])/', "$1" . $separator . "$2", $camelCaps));
     }
 }
