@@ -1,0 +1,19 @@
+{
+    "name": "iayoo/more-ip",
+    "description": "get ip location",
+    "keywords": ["ip", "location"],
+    "homepage": "https://github.com/iayoo/more-ip",
+    "authors": [{
+        "name": "Iayoo",
+        "email": "vilnius94@163.com"
+    }],
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iayoo\\IP\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
