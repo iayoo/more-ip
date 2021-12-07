@@ -42,6 +42,7 @@ class TaoBaoApi extends \Iayoo\IP\IpFactory
                 $this->setProvince($json['data']['region']);
                 $this->setCity($json['data']['city']);
                 $this->setOperator($json['data']['isp']);
+                $this->isSuccess = true;
             }
         }else{
             $this->isSuccess = false;

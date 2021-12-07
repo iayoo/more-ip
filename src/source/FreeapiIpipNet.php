@@ -20,6 +20,7 @@ class FreeapiIpipNet extends IpFactory
             $this->setProvince(isset($json[1])?$json[1]:'');
             $this->setCity(isset($json[2])?$json[2]:'');
             $this->setDistrict(isset($json[3])?$json[3]:'');
+            $this->isSuccess = true;
         }else{
             $this->isSuccess = false;
         }

@@ -45,6 +45,7 @@ class TencentMapApi extends IpFactory
                 $this->setCity($json['result']['ad_info']['city']);
                 $this->setDistrict($json['result']['ad_info']['district']);
             }
+            $this->isSuccess = true;
         }else{
             $this->isSuccess = false;
         }
